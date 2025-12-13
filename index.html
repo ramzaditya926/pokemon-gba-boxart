@@ -17,3 +17,44 @@ body{font-family:Arial,Helvetica,sans-serif;max-width:1000px;margin:20px auto;pa
 <h1>Gallery</h1>
 <p>Klik URL untuk menampilkan gambarnya.</p>
 <div id="grid" class="grid"></div>
+
+  <script>
+// MASUKKAN NAMA FILE GAMBAR DI ARRAY INI (persis seperti nama file di folder Named_Boxarts)
+const images = [
+  "Pokemon-Unbound.jpg",
+  "Pokemon-Odyssey.png",
+  "Pokemon-Radical Red.png"
+];
+
+const grid = document.getElementById('grid');
+images.forEach(name=>{
+  const url = "Named_Boxarts/" + encodeURIComponent(name);
+  const card = document.createElement('div'); card.className = 'card';
+  const a = document.createElement('a');
+  a.className = 'linkurl';
+  a.href = '#';
+  a.dataset.src = url;
+  a.textContent = url;
+  const cap = document.createElement('div'); cap.className='caption'; cap.textContent = name;
+  card.appendChild(a);
+  card.appendChild(cap);
+  grid.appendChild(card);
+});
+
+grid.addEventListener('click', function(e){
+  const a = e.target.closest('a.linkurl');
+  if (!a) return;
+  e.preventDefault();
+  if (a.dataset.loaded) return;
+  const src = a.dataset.src;
+  const img = document.createElement('img');
+  img.className = 'thumb';
+  img.alt = a.textContent;
+  img.loading = 'lazy';
+  img.src = src;
+  a.replaceWith(img);
+  a.dataset.loaded = 'true';
+});
+</script>
+</body>
+</html>
